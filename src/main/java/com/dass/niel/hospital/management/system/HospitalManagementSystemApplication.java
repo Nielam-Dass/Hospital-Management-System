@@ -24,19 +24,7 @@ public class HospitalManagementSystemApplication {
 	@Bean
 	CommandLineRunner commandLineRunner(){
 		return args -> {
-			Patient patient = Patient.builder()
-					.firstName("Adam")
-					.lastName("Smith")
-					.dob(LocalDate.of(2000, 1, 1))
-					.sex("Male")
-					.ssn(111223333)
-					.phoneNumber("555-555-5555")
-					.insurance("XHealth")
-					.build();
 
-			patientRepository.save(patient);
-			List<Patient> patientList = patientRepository.findAll();
-			System.out.println(patientList);
 		};
 
 	}

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Home</title>
+</head>
+<body>
+    <h1>Patient Home</h1>
+    <a th:href="@{new}">Add new patient</a>
+    <p th:text="${numPatients} + ' patient(s) in database'"></p>
+</body>
+</html>
