@@ -6,7 +6,9 @@
 </head>
 <body>
     <h1>Patient Home</h1>
-    <a th:href="@{new}">Add new patient</a>
     <p th:text="${numPatients} + ' patient(s) in database'"></p>
+    <a th:href="@{new}">Add new patient</a><br>
+    <a th:href="@{search}">Search patients</a><br>
+    <a th:href="@{all}">View all patients</a><br>
 </body>
 </html>

@@ -21,4 +21,12 @@ public class PatientService {
     public List<Patient> getAllPatients(){
         return patientRepository.findAll();
     }
+
+    public Patient getPatientBySsn(Integer ssn){
+        return patientRepository.findBySsn(ssn);
+    }
+
+    public List<Patient> getPatientsByFullName(String firstName, String lastName){
+        return patientRepository.findByFirstNameAndLastName(firstName, lastName);
+    }
 }

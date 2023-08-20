@@ -6,6 +6,28 @@
 </head>
 <body>
     <h1>Patient Search</h1>
-    <p th:each="patient: ${patients}" th:text="${patient}"></p>
+    <form method="post">
+        <label for="ssn">SSN:</label>
+        <input type="text" id="ssn" name="ssn">
+
+        <label for="fname">First Name:</label>
+        <input type="text" id="fname" name="firstName">
+
+        <label for="lname">Last Name:</label>
+        <input type="text" id="lname" name="lastName">
+
+        <input type="submit" value="Submit">
+    </form>
+    <div th:if="${patients!=null}">
+        <div th:if="${insufficientParams}">
+            <p>Full name must be provided if SSN is not given</p>
+        </div>
+
+        <div th:unless="${insufficientParams}">
+            <p th:text="${#lists.size(patients)} + ' result(s)'"></p>
+            <p th:each="patient: ${patients}" th:text="${patient}"></p>
+        </div>
+    </div>
+
 </body>
 </html>

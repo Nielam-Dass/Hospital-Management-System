@@ -5,12 +5,11 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
@@ -28,7 +27,39 @@ public class PatientController {
 
     @GetMapping("/search")
     public String patientSearch(Model model){
-        model.addAttribute("patients", patientService.getAllPatients());  // For now, we'll just show all patients
+        return "patient_search";
+    }
+
+    @PostMapping(value = "/search", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    public String patientSearchPost(@RequestBody MultiValueMap<String, String> paramMap, Model model){
+        String ssn = paramMap.getFirst("ssn");
+        String firstName = paramMap.getFirst("firstName");
+        String lastName = paramMap.getFirst("lastName");
+
+        List<Patient> patientList;
+
+        if(ssn!=null && ssn.length()>0){
+            Patient patient = patientService.getPatientBySsn(Integer.valueOf(ssn));
+            if(firstName!=null && firstName.length()>0 && !firstName.equals(patient.getFirstName())){
+                patientList = new ArrayList<>();
+            }
+            else if(lastName!=null && lastName.length()>0 && !lastName.equals(patient.getLastName())){
+                patientList = new ArrayList<>();
+            }
+            else{
+                patientList = (patient!=null) ? List.of(patient) : new ArrayList<>();
+            }
+        }
+        else{
+            if(firstName!=null && firstName.length()>0 && lastName!=null && lastName.length()>0){
+                patientList = patientService.getPatientsByFullName(firstName, lastName);
+            }
+            else{
+                patientList = new ArrayList<>();
+                model.addAttribute("insufficientParams", Boolean.TRUE);
+            }
+        }
+        model.addAttribute("patients", patientList);
         return "patient_search";
     }
 
@@ -57,6 +88,13 @@ public class PatientController {
         patientService.addNewPatient(patient);
 
         return "redirect:";
+    }
+
+    @GetMapping("/all")
+    @ResponseBody
+    public String getAllPatients(){
+        List<Patient> patientList = patientService.getAllPatients();
+        return patientList.toString();
     }
 
 }
