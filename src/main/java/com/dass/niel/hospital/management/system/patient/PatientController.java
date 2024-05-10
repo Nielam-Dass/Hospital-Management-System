@@ -90,6 +90,22 @@ public class PatientController {
         return "redirect:";
     }
 
+    @GetMapping("/view/{patientIdStr}")
+    public String patientView(@PathVariable String patientIdStr, Model model){
+        try{
+            Long patientId = Long.valueOf(patientIdStr);
+            Patient patient = patientService.getPatientById(patientId);
+            if(patient==null){
+                return "redirect:";
+            }
+            model.addAttribute("patient", patient);
+            return "patient_view";
+        }
+        catch (NumberFormatException nfe) {
+            return "redirect:";
+        }
+    }
+
     @GetMapping("/all")
     @ResponseBody
     public String getAllPatients(){
