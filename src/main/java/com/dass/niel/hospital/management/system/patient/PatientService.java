@@ -40,4 +40,8 @@ public class PatientService {
             return null;
         }
     }
+
+    public void updatePatient(Patient patient){
+        patientRepository.save(patient);
+    }
 }

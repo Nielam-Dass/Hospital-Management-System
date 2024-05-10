@@ -87,7 +87,7 @@ public class PatientController {
 
         patientService.addNewPatient(patient);
 
-        return "redirect:";
+        return "redirect:/patient/";
     }
 
     @GetMapping("/view/{patientIdStr}")
@@ -96,14 +96,39 @@ public class PatientController {
             Long patientId = Long.valueOf(patientIdStr);
             Patient patient = patientService.getPatientById(patientId);
             if(patient==null){
-                return "redirect:";
+                return "redirect:/patient/";
             }
             model.addAttribute("patient", patient);
             return "patient_view";
         }
         catch (NumberFormatException nfe) {
-            return "redirect:";
+            return "redirect:/patient/";
         }
+    }
+
+    @PostMapping(value="/view/{patientIdStr}", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    public String patientUpdate(@PathVariable String patientIdStr, @RequestBody MultiValueMap<String, String> paramMap){
+        if(!paramMap.containsKey("firstName") || !paramMap.containsKey("lastName")
+                || !paramMap.containsKey("ssn") || !paramMap.containsKey("phoneNumber")){
+            throw new RuntimeException("Insufficient POST parameters provided");
+        }
+        try{
+            Long patientId = Long.valueOf(patientIdStr);
+            Patient patient = patientService.getPatientById(patientId);
+            if(patient!=null){
+                patient.setFirstName(paramMap.getFirst("firstName"));
+                patient.setLastName(paramMap.getFirst("lastName"));
+                patient.setSsn(Integer.valueOf(paramMap.getFirst("ssn")));
+                patient.setPhoneNumber(paramMap.getFirst("phoneNumber"));
+                patient.setInsurance(paramMap.containsKey("insurance") && paramMap.getFirst("insurance").length()>0 ? paramMap.getFirst("insurance") : null);
+                patientService.updatePatient(patient);
+            }
+            return "redirect:/patient/";
+        }
+        catch (NumberFormatException nfe) {
+            return "redirect:/patient/";
+        }
+
     }
 
     @GetMapping("/all")
