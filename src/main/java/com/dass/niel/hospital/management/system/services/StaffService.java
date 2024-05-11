@@ -1,5 +1,7 @@
-package com.dass.niel.hospital.management.system.staff;
+package com.dass.niel.hospital.management.system.services;
 
+import com.dass.niel.hospital.management.system.repositories.StaffRepository;
+import com.dass.niel.hospital.management.system.entities.Staff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

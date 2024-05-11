@@ -1,5 +1,7 @@
-package com.dass.niel.hospital.management.system.staff;
+package com.dass.niel.hospital.management.system.controllers;
 
+import com.dass.niel.hospital.management.system.services.StaffService;
+import com.dass.niel.hospital.management.system.entities.Staff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -21,12 +23,12 @@ public class StaffController {
     @GetMapping("/")
     public String staffIndex(Model model){
         model.addAttribute("numStaff", staffService.getNumOfStaff());
-        return "staff_index";
+        return "staff/staff_index";
     }
 
     @GetMapping("/search")
     public String staffSearch(Model model){
-        return "staff_search";
+        return "staff/staff_search";
     }
 
     @PostMapping(value = "/search", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
@@ -62,12 +64,12 @@ public class StaffController {
         }
 
         model.addAttribute("staff", staffList);
-        return "staff_search";
+        return "staff/staff_search";
     }
 
     @GetMapping("/new")
     public String staffAdd(){
-        return "staff_add";
+        return "staff/staff_add";
     }
 
     @PostMapping(value = "/new", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})

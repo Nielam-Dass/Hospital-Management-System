@@ -1,5 +1,6 @@
-package com.dass.niel.hospital.management.system.staff;
+package com.dass.niel.hospital.management.system.repositories;
 
+import com.dass.niel.hospital.management.system.entities.Staff;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

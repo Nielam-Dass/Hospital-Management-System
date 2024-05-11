@@ -1,5 +1,7 @@
-package com.dass.niel.hospital.management.system.patient;
+package com.dass.niel.hospital.management.system.services;
 
+import com.dass.niel.hospital.management.system.entities.Patient;
+import com.dass.niel.hospital.management.system.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

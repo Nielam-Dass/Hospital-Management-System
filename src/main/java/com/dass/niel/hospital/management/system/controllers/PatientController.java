@@ -1,5 +1,7 @@
-package com.dass.niel.hospital.management.system.patient;
+package com.dass.niel.hospital.management.system.controllers;
 
+import com.dass.niel.hospital.management.system.entities.Patient;
+import com.dass.niel.hospital.management.system.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -22,12 +24,12 @@ public class PatientController {
     @GetMapping("/")
     public String patientIndex(Model model){
         model.addAttribute("numPatients", patientService.getNumOfPatients());
-        return "patient_index";
+        return "patient/patient_index";
     }
 
     @GetMapping("/search")
     public String patientSearch(Model model){
-        return "patient_search";
+        return "patient/patient_search";
     }
 
     @PostMapping(value = "/search", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
@@ -60,12 +62,12 @@ public class PatientController {
             }
         }
         model.addAttribute("patients", patientList);
-        return "patient_search";
+        return "patient/patient_search";
     }
 
     @GetMapping("/new")  // Will be removed later (should only add patient upon first visit)
     public String patientAdd(){
-        return "patient_add";
+        return "patient/patient_add";
     }
 
     @PostMapping(value = "/new", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
@@ -99,7 +101,7 @@ public class PatientController {
                 return "redirect:/patient/";
             }
             model.addAttribute("patient", patient);
-            return "patient_view";
+            return "patient/patient_view";
         }
         catch (NumberFormatException nfe) {
             return "redirect:/patient/";

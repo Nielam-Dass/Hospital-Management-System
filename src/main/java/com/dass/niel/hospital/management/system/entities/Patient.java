@@ -1,4 +1,4 @@
-package com.dass.niel.hospital.management.system.patient;
+package com.dass.niel.hospital.management.system.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
