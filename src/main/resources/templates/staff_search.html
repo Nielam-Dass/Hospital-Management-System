@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Staff Search</title>
+</head>
+<body>
+<h1>Staff Search</h1>
+<form method="post">
+    <label for="fname">First Name:</label>
+    <input type="text" id="fname" name="firstName">
+
+    <label for="lname">Last Name:</label>
+    <input type="text" id="lname" name="lastName">
+
+    <label for="department">Department:</label>
+    <input type="text" id="department" name="department">
+
+    <input type="submit" value="Submit">
+</form>
+<div th:if="${staff!=null}">
+    <div th:if="${insufficientParams}">
+        <p>First and last names must be provided together</p>
+    </div>
+
+    <div th:unless="${insufficientParams}">
+        <p th:text="${#lists.size(staff)} + ' result(s)'"></p>
+        <p th:each="s: ${staff}" th:text="${s}"></p>
+    </div>
+</div>
+
+</body>
+</html>

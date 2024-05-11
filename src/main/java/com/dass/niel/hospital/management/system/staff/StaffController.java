@@ -1,6 +1,5 @@
 package com.dass.niel.hospital.management.system.staff;
 
-import com.dass.niel.hospital.management.system.patient.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -9,6 +8,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -22,6 +22,47 @@ public class StaffController {
     public String staffIndex(Model model){
         model.addAttribute("numStaff", staffService.getNumOfStaff());
         return "staff_index";
+    }
+
+    @GetMapping("/search")
+    public String staffSearch(Model model){
+        return "staff_search";
+    }
+
+    @PostMapping(value = "/search", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    public String staffSearchPost(@RequestBody MultiValueMap<String, String> paramMap, Model model){
+        String firstName = paramMap.getFirst("firstName");
+        String lastName = paramMap.getFirst("lastName");
+        String department = paramMap.getFirst("department");
+        boolean fullNameProvided = firstName!=null && firstName.length()>0 && lastName!=null && lastName.length()>0;
+        boolean noNameProvided = (firstName==null || firstName.length()==0) && (lastName==null || lastName.length()==0);
+        boolean departmentProvided = department!=null && department.length()>0;
+
+        List<Staff> staffList;
+
+        if(departmentProvided){
+            if(fullNameProvided){
+                staffList = staffService.getStaffByFullNameAndDepartment(firstName, lastName, department);
+            }
+            else if(noNameProvided){
+                staffList = staffService.getStaffInDepartment(department);
+            }
+            else{
+                staffList = new ArrayList<>();
+                model.addAttribute("insufficientParams", Boolean.TRUE);
+            }
+
+        }
+        else if(fullNameProvided) {
+            staffList = staffService.getStaffByFullName(firstName, lastName);
+        }
+        else{
+            staffList = new ArrayList<>();
+            model.addAttribute("insufficientParams", Boolean.TRUE);
+        }
+
+        model.addAttribute("staff", staffList);
+        return "staff_search";
     }
 
     @GetMapping("/new")

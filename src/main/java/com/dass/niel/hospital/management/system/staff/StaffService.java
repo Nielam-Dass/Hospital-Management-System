@@ -23,4 +23,16 @@ public class StaffService {
         return staffRepository.findAll();
     }
 
+    public List<Staff> getStaffByFullNameAndDepartment(String firstName, String lastName, String department){
+        return staffRepository.findByFirstNameAndLastNameAndDepartment(firstName, lastName, department);
+    }
+
+    public List<Staff> getStaffByFullName(String firstName, String lastName){
+        return staffRepository.findByFirstNameAndLastName(firstName, lastName);
+    }
+
+    public List<Staff> getStaffInDepartment(String department){
+        return staffRepository.findByDepartment(department);
+    }
+
 }
