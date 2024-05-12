@@ -42,14 +42,17 @@ public class PatientController {
 
         if(ssn!=null && ssn.length()>0){
             Patient patient = patientService.getPatientBySsn(Integer.valueOf(ssn));
-            if(firstName!=null && firstName.length()>0 && !firstName.equals(patient.getFirstName())){
+            if(patient==null){
+                patientList = new ArrayList<>();
+            }
+            else if(firstName!=null && firstName.length()>0 && !firstName.equals(patient.getFirstName())){
                 patientList = new ArrayList<>();
             }
             else if(lastName!=null && lastName.length()>0 && !lastName.equals(patient.getLastName())){
                 patientList = new ArrayList<>();
             }
             else{
-                patientList = (patient!=null) ? List.of(patient) : new ArrayList<>();
+                patientList = List.of(patient);
             }
         }
         else{
