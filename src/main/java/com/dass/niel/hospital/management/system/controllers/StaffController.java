@@ -94,6 +94,49 @@ public class StaffController {
         return "redirect:/staff/";
     }
 
+    @GetMapping("/view/{staffIdStr}")
+    public String staffView(@PathVariable String staffIdStr, Model model){
+        try{
+            Long staffId = Long.valueOf(staffIdStr);
+            Staff staff = staffService.getStaffById(staffId);
+            if(staff==null){
+                return "redirect:/staff/";
+            }
+            model.addAttribute("staff", staff);
+            return "staff/staff_view";
+        }
+        catch (NumberFormatException nfe) {
+            return "redirect:/staff/";
+        }
+    }
+
+    @PostMapping(value = "/view/{staffIdStr}", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    public String staffUpdate(@PathVariable String staffIdStr, @RequestBody MultiValueMap<String, String> paramMap){
+        if(!paramMap.containsKey("firstName") || !paramMap.containsKey("lastName")
+                || !paramMap.containsKey("department") || !paramMap.containsKey("role")
+                || !paramMap.containsKey("salary")){
+            throw new RuntimeException("Insufficient POST parameters provided");
+        }
+
+        try{
+            Long staffId = Long.valueOf(staffIdStr);
+            Staff staff = staffService.getStaffById(staffId);
+            if(staff!=null){
+                staff.setFirstName(paramMap.getFirst("firstName"));
+                staff.setLastName(paramMap.getFirst("lastName"));
+                staff.setDepartment(paramMap.getFirst("department"));
+                staff.setRole(paramMap.getFirst("role"));
+                staff.setSalary(Integer.valueOf(paramMap.getFirst("salary")));
+                staffService.updateStaff(staff);
+            }
+            return "redirect:/staff/";
+        }
+        catch (NumberFormatException nfe){
+            return "redirect:/staff/";
+        }
+
+    }
+
     @GetMapping("/all")
     @ResponseBody
     public String getAllStaff(){

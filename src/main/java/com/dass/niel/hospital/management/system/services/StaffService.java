@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StaffService {
@@ -37,4 +38,17 @@ public class StaffService {
         return staffRepository.findByDepartment(department);
     }
 
+    public Staff getStaffById(Long staffId) {
+        Optional<Staff> staff = staffRepository.findById(staffId);
+        if(staff.isPresent()){
+            return staff.get();
+        }
+        else{
+            return null;
+        }
+    }
+
+    public void updateStaff(Staff staff){
+        staffRepository.save(staff);
+    }
 }

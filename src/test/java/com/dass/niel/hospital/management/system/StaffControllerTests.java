@@ -142,9 +142,9 @@ public class StaffControllerTests {
                 .andExpect(content().string(containsString("5 staff in database")));
 
         mockMvc.perform(get("/staff/view/4"))
-                .andExpect(status().isOk()).andExpect(content().string(containsString("Christoper Wilson Employee Profile")))
-                .andExpect(content().string(containsString("DOB: 1988-08-16")))
-                .andExpect(content().string(containsString("Hired on: 2016-10-02")))
+                .andExpect(status().isOk()).andExpect(content().string(containsString("Christopher Wilson Employee Profile")))
+                .andExpect(content().string(containsString("DOB: 1987-05-15")))
+                .andExpect(content().string(containsString("Hired on: 2021-11-07")))
                 .andExpect(content().string(containsString("value=\"Cleaning\"")))
                 .andExpect(content().string(containsString("value=\"Janitor\"")))
                 .andExpect(content().string(containsString("value=\"50000\"")));
@@ -156,9 +156,9 @@ public class StaffControllerTests {
                 .andExpect(status().is3xxRedirection());
 
         mockMvc.perform(get("/staff/view/4"))
-                .andExpect(status().isOk()).andExpect(content().string(containsString("Christoper Wilson Employee Profile")))
-                .andExpect(content().string(containsString("DOB: 1988-08-16")))
-                .andExpect(content().string(containsString("Hired on: 2016-10-02")))
+                .andExpect(status().isOk()).andExpect(content().string(containsString("Christopher Wilson Employee Profile")))
+                .andExpect(content().string(containsString("DOB: 1987-05-15")))
+                .andExpect(content().string(containsString("Hired on: 2021-11-07")))
                 .andExpect(content().string(containsString("value=\"Cleaning\"")))
                 .andExpect(content().string(containsString("value=\"Senior Janitor\"")))
                 .andExpect(content().string(containsString("value=\"70000\"")));
