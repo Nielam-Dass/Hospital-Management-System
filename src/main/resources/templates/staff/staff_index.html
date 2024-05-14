@@ -7,8 +7,8 @@
 <body>
     <h1>Staff Home</h1>
     <p th:text="${numStaff} + ' staff in database'"></p>
-    <a th:href="@{new}">Add new staff</a><br>
-    <a th:href="@{search}">Search staff</a><br>
-    <a th:href="@{all}">View all staff</a><br>
+    <a th:href="@{/staff/new}">Add new staff</a><br>
+    <a th:href="@{/staff/search}">Search staff</a><br>
+    <a th:href="@{/staff/all}">View all staff</a><br>
 </body>
 </html>

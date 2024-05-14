@@ -27,6 +27,10 @@ public class StaffControllerTests {
         mockMvc.perform(get("/staff/"))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("Staff Home")))
                 .andExpect(content().string(containsString("0 staff in database")));
+
+        mockMvc.perform(get("/staff"))
+                .andExpect(status().isOk()).andExpect(content().string(containsString("Staff Home")))
+                .andExpect(content().string(containsString("0 staff in database")));
     }
 
     @Test
@@ -35,11 +39,15 @@ public class StaffControllerTests {
         mockMvc.perform(get("/staff/"))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("Staff Home")))
                 .andExpect(content().string(containsString("5 staff in database")));
+
+        mockMvc.perform(get("/staff"))
+                .andExpect(status().isOk()).andExpect(content().string(containsString("Staff Home")))
+                .andExpect(content().string(containsString("5 staff in database")));
     }
 
     @Test
     void testStaffAddWithoutDbInit() throws Exception {
-        mockMvc.perform(get("/staff/"))
+        mockMvc.perform(get("/staff"))
                 .andExpect(content().string(containsString("0 staff in database")));
 
         mockMvc.perform(post("/staff/new").contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -49,14 +57,14 @@ public class StaffControllerTests {
                         .param("salary", "195000"))
                 .andExpect(status().is3xxRedirection());
 
-        mockMvc.perform(get("/staff/"))
+        mockMvc.perform(get("/staff"))
                 .andExpect(content().string(containsString("1 staff in database")));
     }
 
     @Test
     @Sql(scripts = {"/staff_data_init.sql"})
     void testStaffAddWithDbInit() throws Exception {
-        mockMvc.perform(get("/staff/"))
+        mockMvc.perform(get("/staff"))
                 .andExpect(content().string(containsString("5 staff in database")));
 
         mockMvc.perform(get("/staff/new"))
@@ -69,14 +77,14 @@ public class StaffControllerTests {
                         .param("salary", "210000"))
                 .andExpect(status().is3xxRedirection());
 
-        mockMvc.perform(get("/staff/"))
+        mockMvc.perform(get("/staff"))
                 .andExpect(content().string(containsString("6 staff in database")));
     }
 
     @Test
     @Sql(scripts = {"/staff_data_init.sql"})
     void testStaffSearch() throws Exception {
-        mockMvc.perform(get("/staff/"))
+        mockMvc.perform(get("/staff"))
                 .andExpect(content().string(containsString("5 staff in database")));
 
         mockMvc.perform(get("/staff/search"))
@@ -111,7 +119,7 @@ public class StaffControllerTests {
                         .param("firstName", "Daniel"))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("First and last names must be provided together")));
 
-        mockMvc.perform(get("/staff/"))
+        mockMvc.perform(get("/staff"))
                 .andExpect(content().string(containsString("5 staff in database")));
 
     }
@@ -138,7 +146,7 @@ public class StaffControllerTests {
     @Test
     @Sql(scripts = {"/staff_data_init.sql"})
     void testStaffUpdate() throws Exception {
-        mockMvc.perform(get("/staff/"))
+        mockMvc.perform(get("/staff"))
                 .andExpect(content().string(containsString("5 staff in database")));
 
         mockMvc.perform(get("/staff/view/4"))
@@ -163,7 +171,7 @@ public class StaffControllerTests {
                 .andExpect(content().string(containsString("value=\"Senior Janitor\"")))
                 .andExpect(content().string(containsString("value=\"70000\"")));
 
-        mockMvc.perform(get("/staff/"))
+        mockMvc.perform(get("/staff"))
                 .andExpect(content().string(containsString("5 staff in database")));
 
     }

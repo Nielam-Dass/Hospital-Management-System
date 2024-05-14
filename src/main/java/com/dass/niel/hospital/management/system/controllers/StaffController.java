@@ -20,7 +20,7 @@ public class StaffController {
     @Autowired
     StaffService staffService;
 
-    @GetMapping("/")
+    @GetMapping(value = {"", "/"})
     public String staffIndex(Model model){
         model.addAttribute("numStaff", staffService.getNumOfStaff());
         return "staff/staff_index";
@@ -91,7 +91,7 @@ public class StaffController {
 
         staffService.addNewStaff(staff);
 
-        return "redirect:/staff/";
+        return "redirect:/staff";
     }
 
     @GetMapping("/view/{staffIdStr}")
@@ -100,13 +100,13 @@ public class StaffController {
             Long staffId = Long.valueOf(staffIdStr);
             Staff staff = staffService.getStaffById(staffId);
             if(staff==null){
-                return "redirect:/staff/";
+                return "redirect:/staff";
             }
             model.addAttribute("staff", staff);
             return "staff/staff_view";
         }
         catch (NumberFormatException nfe) {
-            return "redirect:/staff/";
+            return "redirect:/staff";
         }
     }
 
@@ -129,10 +129,10 @@ public class StaffController {
                 staff.setSalary(Integer.valueOf(paramMap.getFirst("salary")));
                 staffService.updateStaff(staff);
             }
-            return "redirect:/staff/";
+            return "redirect:/staff";
         }
         catch (NumberFormatException nfe){
-            return "redirect:/staff/";
+            return "redirect:/staff";
         }
 
     }
