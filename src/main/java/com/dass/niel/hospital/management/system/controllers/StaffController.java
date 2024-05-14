@@ -94,7 +94,7 @@ public class StaffController {
         return "redirect:/staff";
     }
 
-    @GetMapping("/view/{staffIdStr}")
+    @GetMapping("/profile/{staffIdStr}/view")
     public String staffView(@PathVariable String staffIdStr, Model model){
         try{
             Long staffId = Long.valueOf(staffIdStr);
@@ -110,7 +110,23 @@ public class StaffController {
         }
     }
 
-    @PostMapping(value = "/view/{staffIdStr}", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    @GetMapping("/profile/{staffIdStr}/edit")
+    public String staffEdit(@PathVariable String staffIdStr, Model model){
+        try{
+            Long staffId = Long.valueOf(staffIdStr);
+            Staff staff = staffService.getStaffById(staffId);
+            if(staff==null){
+                return "redirect:/staff";
+            }
+            model.addAttribute("staff", staff);
+            return "staff/staff_edit";
+        }
+        catch (NumberFormatException nfe) {
+            return "redirect:/staff";
+        }
+    }
+
+    @PostMapping(value = "/profile/{staffIdStr}/edit", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     public String staffUpdate(@PathVariable String staffIdStr, @RequestBody MultiValueMap<String, String> paramMap){
         if(!paramMap.containsKey("firstName") || !paramMap.containsKey("lastName")
                 || !paramMap.containsKey("department") || !paramMap.containsKey("role")
@@ -129,7 +145,7 @@ public class StaffController {
                 staff.setSalary(Integer.valueOf(paramMap.getFirst("salary")));
                 staffService.updateStaff(staff);
             }
-            return "redirect:/staff";
+            return "redirect:/staff/profile/" + staffIdStr + "/view";
         }
         catch (NumberFormatException nfe){
             return "redirect:/staff";

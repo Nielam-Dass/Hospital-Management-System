@@ -149,27 +149,35 @@ public class StaffControllerTests {
         mockMvc.perform(get("/staff"))
                 .andExpect(content().string(containsString("5 staff in database")));
 
-        mockMvc.perform(get("/staff/view/4"))
+        mockMvc.perform(get("/staff/profile/4/view"))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("Christopher Wilson Employee Profile")))
+                .andExpect(content().string(containsString("DOB: 1987-05-15")))
+                .andExpect(content().string(containsString("Hired on: 2021-11-07")))
+                .andExpect(content().string(containsString("Department: Cleaning")))
+                .andExpect(content().string(containsString("Role: Janitor")))
+                .andExpect(content().string(containsString("Salary: 50000")));
+
+        mockMvc.perform(get("/staff/profile/4/edit"))
+                .andExpect(status().isOk()).andExpect(content().string(containsString("Update Christopher Wilson employee information")))
                 .andExpect(content().string(containsString("DOB: 1987-05-15")))
                 .andExpect(content().string(containsString("Hired on: 2021-11-07")))
                 .andExpect(content().string(containsString("value=\"Cleaning\"")))
                 .andExpect(content().string(containsString("value=\"Janitor\"")))
                 .andExpect(content().string(containsString("value=\"50000\"")));
 
-        mockMvc.perform(post("/staff/view/4").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        mockMvc.perform(post("/staff/profile/4/edit").contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("firstName", "Christopher").param("lastName", "Wilson")
                         .param("department", "Cleaning").param("role", "Senior Janitor")
                         .param("salary", "70000").param("dob", "2000-01-01"))
                 .andExpect(status().is3xxRedirection());
 
-        mockMvc.perform(get("/staff/view/4"))
+        mockMvc.perform(get("/staff/profile/4/view"))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("Christopher Wilson Employee Profile")))
                 .andExpect(content().string(containsString("DOB: 1987-05-15")))
                 .andExpect(content().string(containsString("Hired on: 2021-11-07")))
-                .andExpect(content().string(containsString("value=\"Cleaning\"")))
-                .andExpect(content().string(containsString("value=\"Senior Janitor\"")))
-                .andExpect(content().string(containsString("value=\"70000\"")));
+                .andExpect(content().string(containsString("Department: Cleaning")))
+                .andExpect(content().string(containsString("Role: Senior Janitor")))
+                .andExpect(content().string(containsString("Salary: 70000")));
 
         mockMvc.perform(get("/staff"))
                 .andExpect(content().string(containsString("5 staff in database")));
