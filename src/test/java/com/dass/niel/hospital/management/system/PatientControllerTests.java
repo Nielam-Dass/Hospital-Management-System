@@ -29,6 +29,10 @@ public class PatientControllerTests {
         mockMvc.perform(get("/patient/"))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("Patient Home")))
                 .andExpect(content().string(containsString("0 patient(s) in database")));
+
+        mockMvc.perform(get("/patient"))
+                .andExpect(status().isOk()).andExpect(content().string(containsString("Patient Home")))
+                .andExpect(content().string(containsString("0 patient(s) in database")));
     }
 
     @Test
@@ -37,11 +41,15 @@ public class PatientControllerTests {
         mockMvc.perform(get("/patient/"))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("Patient Home")))
                 .andExpect(content().string(containsString("7 patient(s) in database")));
+
+        mockMvc.perform(get("/patient"))
+                .andExpect(status().isOk()).andExpect(content().string(containsString("Patient Home")))
+                .andExpect(content().string(containsString("7 patient(s) in database")));
     }
 
     @Test
     void testPatientAddWithoutDbInit() throws Exception {
-        mockMvc.perform(get("/patient/"))
+        mockMvc.perform(get("/patient"))
                 .andExpect(content().string(containsString("0 patient(s) in database")));
 
         mockMvc.perform(get("/patient/new"))
@@ -54,7 +62,7 @@ public class PatientControllerTests {
                 .param("insurance", "XHealth"))
                 .andExpect(status().is3xxRedirection());
 
-        mockMvc.perform(get("/patient/")).andDo(print())
+        mockMvc.perform(get("/patient")).andDo(print())
                 .andExpect(status().isOk()).andExpect(content().string(containsString("Patient Home")))
                 .andExpect(content().string(containsString("1 patient(s) in database")));
 
@@ -65,7 +73,7 @@ public class PatientControllerTests {
                         .param("insurance", ""))
                         .andExpect(status().is3xxRedirection());
 
-        mockMvc.perform(get("/patient/")).andDo(print())
+        mockMvc.perform(get("/patient")).andDo(print())
                 .andExpect(status().isOk()).andExpect(content().string(containsString("Patient Home")))
                 .andExpect(content().string(containsString("2 patient(s) in database")));
     }
@@ -73,7 +81,7 @@ public class PatientControllerTests {
     @Test
     @Sql(scripts = {"/patient_data_init.sql"})
     void testPatientAddWithDbInit() throws Exception {
-        mockMvc.perform(get("/patient/"))
+        mockMvc.perform(get("/patient"))
                 .andExpect(content().string(containsString("7 patient(s) in database")));
 
 
@@ -84,14 +92,14 @@ public class PatientControllerTests {
                         .param("insurance", "Medicare"))
                 .andExpect(status().is3xxRedirection());
 
-        mockMvc.perform(get("/patient/"))
+        mockMvc.perform(get("/patient"))
                 .andExpect(content().string(containsString("8 patient(s) in database")));
     }
 
     @Test
     @Sql(scripts = {"/patient_data_init.sql"})
     void testPatientSearch() throws Exception {
-        mockMvc.perform(get("/patient/"))
+        mockMvc.perform(get("/patient"))
                 .andExpect(content().string(containsString("7 patient(s) in database")));
 
         mockMvc.perform(get("/patient/search"))
@@ -158,7 +166,7 @@ public class PatientControllerTests {
     @Test
     @Sql(scripts = {"/patient_data_init.sql"})
     void testPatientUpdate() throws Exception {
-        mockMvc.perform(get("/patient/"))
+        mockMvc.perform(get("/patient"))
                 .andExpect(content().string(containsString("7 patient(s) in database")));
 
         mockMvc.perform(get("/patient/view/2"))
@@ -180,7 +188,7 @@ public class PatientControllerTests {
                 .andExpect(content().string(containsString("value=\"222334444\"")))
                 .andExpect(content().string(containsString("value=\"222-222-3333\"")));
 
-        mockMvc.perform(get("/patient/"))
+        mockMvc.perform(get("/patient"))
                 .andExpect(content().string(containsString("7 patient(s) in database")));
     }
 

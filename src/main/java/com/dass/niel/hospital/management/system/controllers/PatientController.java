@@ -21,7 +21,7 @@ public class PatientController {
     @Autowired
     PatientService patientService;
 
-    @GetMapping("/")
+    @GetMapping(value = {"", "/"})
     public String patientIndex(Model model){
         model.addAttribute("numPatients", patientService.getNumOfPatients());
         return "patient/patient_index";
@@ -68,7 +68,7 @@ public class PatientController {
         return "patient/patient_search";
     }
 
-    @GetMapping("/new")  // Will be removed later (should only add patient upon first visit)
+    @GetMapping("new")  // Will be removed later (should only add patient upon first visit)
     public String patientAdd(){
         return "patient/patient_add";
     }
@@ -92,7 +92,7 @@ public class PatientController {
 
         patientService.addNewPatient(patient);
 
-        return "redirect:/patient/";
+        return "redirect:/patient";
     }
 
     @GetMapping("/view/{patientIdStr}")
@@ -101,20 +101,20 @@ public class PatientController {
             Long patientId = Long.valueOf(patientIdStr);
             Patient patient = patientService.getPatientById(patientId);
             if(patient==null){
-                return "redirect:/patient/";
+                return "redirect:/patient";
             }
             model.addAttribute("patient", patient);
             return "patient/patient_view";
         }
         catch (NumberFormatException nfe) {
-            return "redirect:/patient/";
+            return "redirect:/patient";
         }
     }
 
     @PostMapping(value="/view/{patientIdStr}", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     public String patientUpdate(@PathVariable String patientIdStr, @RequestBody MultiValueMap<String, String> paramMap){
         if(!paramMap.containsKey("firstName") || !paramMap.containsKey("lastName")
-                || !paramMap.containsKey("ssn") || !paramMap.containsKey("phoneNumber")){
+                || !paramMap.containsKey("ssn") || !paramMap.containsKey("phoneNumber") || !paramMap.containsKey("insurance")){
             throw new RuntimeException("Insufficient POST parameters provided");
         }
         try{
@@ -128,10 +128,10 @@ public class PatientController {
                 patient.setInsurance(paramMap.containsKey("insurance") && paramMap.getFirst("insurance").length()>0 ? paramMap.getFirst("insurance") : null);
                 patientService.updatePatient(patient);
             }
-            return "redirect:/patient/";
+            return "redirect:/patient";
         }
         catch (NumberFormatException nfe) {
-            return "redirect:/patient/";
+            return "redirect:/patient";
         }
 
     }
