@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Patient Profile</title>
+</head>
+<body>
+<h1 th:text="'Update ' + ${patient.firstName} + ' ' + ${patient.lastName} + ' patient information'"></h1>
+<p th:text="'DOB: ' + ${patient.dob}"></p>
+<p th:text="'Sex: ' + ${patient.sex}"></p>
+
+<form method="post">
+    <label for="fname">First Name: </label>
+    <input type="text" id="fname" name="firstName" th:value="${patient.firstName}"><br>
+
+    <label for="lname">Last Name: </label>
+    <input type="text" id="lname" name="lastName" th:value="${patient.lastName}"><br>
+
+    <label for="ssn">SSN: </label>
+    <input type="text" id="ssn" name="ssn" th:value="${patient.ssn}"><br>
+
+    <label for="phone">Phone Number: </label>
+    <input type="text" id="phone" name="phoneNumber" th:value="${patient.phoneNumber}"><br>
+
+    <label for="insurance">Insurance: </label>
+    <input type="text" id="insurance" name="insurance" th:value="${patient.insurance}"><br>
+
+    <input type="submit" value="Update">
+</form>
+</body>
+</html>

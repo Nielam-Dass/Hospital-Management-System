@@ -169,24 +169,29 @@ public class PatientControllerTests {
         mockMvc.perform(get("/patient"))
                 .andExpect(content().string(containsString("7 patient(s) in database")));
 
-        mockMvc.perform(get("/patient/view/2"))
+        mockMvc.perform(get("/patient/profile/2/view"))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("Adam Smith Patient Profile")))
+                .andExpect(content().string(containsString("DOB: 2004-04-18")))
+                .andExpect(content().string(containsString("SSN: 222334444")))
+                .andExpect(content().string(containsString("Phone number: 222-222-2222")));
+
+        mockMvc.perform(get("/patient/profile/2/edit"))
+                .andExpect(status().isOk()).andExpect(content().string(containsString("Update Adam Smith patient information")))
                 .andExpect(content().string(containsString("DOB: 2004-04-18")))
                 .andExpect(content().string(containsString("value=\"222334444\"")))
                 .andExpect(content().string(containsString("value=\"222-222-2222\"")));
 
-        mockMvc.perform(post("/patient/view/2").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        mockMvc.perform(post("/patient/profile/2/edit").contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("firstName", "William").param("lastName", "Smith")
-                        .param("dob", "2004-04-18").param("sex", "Male")
                         .param("ssn", "222334444").param("phoneNumber", "222-222-3333")
-                        .param("insurance", "XHealth"))
+                        .param("insurance", "XHealth").param("dob", "2004-01-01"))
                 .andExpect(status().is3xxRedirection());
 
-        mockMvc.perform(get("/patient/view/2"))
+        mockMvc.perform(get("/patient/profile/2/view"))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("William Smith Patient Profile")))
                 .andExpect(content().string(containsString("DOB: 2004-04-18")))
-                .andExpect(content().string(containsString("value=\"222334444\"")))
-                .andExpect(content().string(containsString("value=\"222-222-3333\"")));
+                .andExpect(content().string(containsString("SSN: 222334444")))
+                .andExpect(content().string(containsString("Phone number: 222-222-3333")));
 
         mockMvc.perform(get("/patient"))
                 .andExpect(content().string(containsString("7 patient(s) in database")));

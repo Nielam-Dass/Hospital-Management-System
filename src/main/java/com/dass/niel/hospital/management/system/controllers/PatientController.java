@@ -95,7 +95,7 @@ public class PatientController {
         return "redirect:/patient";
     }
 
-    @GetMapping("/view/{patientIdStr}")
+    @GetMapping("/profile/{patientIdStr}/view")
     public String patientView(@PathVariable String patientIdStr, Model model){
         try{
             Long patientId = Long.valueOf(patientIdStr);
@@ -111,7 +111,23 @@ public class PatientController {
         }
     }
 
-    @PostMapping(value="/view/{patientIdStr}", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    @GetMapping("/profile/{patientIdStr}/edit")
+    public String patientEdit(@PathVariable String patientIdStr, Model model){
+        try{
+            Long patientId = Long.valueOf(patientIdStr);
+            Patient patient = patientService.getPatientById(patientId);
+            if(patient==null){
+                return "redirect:/patient";
+            }
+            model.addAttribute("patient", patient);
+            return "patient/patient_edit";
+        }
+        catch (NumberFormatException nfe) {
+            return "redirect:/patient";
+        }
+    }
+
+    @PostMapping(value="/profile/{patientIdStr}/edit", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     public String patientUpdate(@PathVariable String patientIdStr, @RequestBody MultiValueMap<String, String> paramMap){
         if(!paramMap.containsKey("firstName") || !paramMap.containsKey("lastName")
                 || !paramMap.containsKey("ssn") || !paramMap.containsKey("phoneNumber") || !paramMap.containsKey("insurance")){
@@ -128,7 +144,7 @@ public class PatientController {
                 patient.setInsurance(paramMap.containsKey("insurance") && paramMap.getFirst("insurance").length()>0 ? paramMap.getFirst("insurance") : null);
                 patientService.updatePatient(patient);
             }
-            return "redirect:/patient";
+            return "redirect:/patient/profile/" + patientIdStr + "/view/";
         }
         catch (NumberFormatException nfe) {
             return "redirect:/patient";
