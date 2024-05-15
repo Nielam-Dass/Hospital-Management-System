@@ -31,7 +31,9 @@ public class Visit {
     @Column(name = "reason", nullable = false)
     private String reason;
 
-    @ManyToOne
+    @ManyToOne(
+            optional = false
+    )
     @JoinColumn(
             name = "patient_id",
             referencedColumnName = "patientId"
