@@ -1,3 +1,5 @@
+SET REFERENTIAL_INTEGRITY FALSE;
+
 truncate table patient;
 
 insert into patient (dob, first_name, insurance, last_name, phone_number, sex, ssn, patient_id) values
@@ -10,3 +12,5 @@ insert into patient (dob, first_name, insurance, last_name, phone_number, sex, s
 ('2012-06-07', 'Henry', 'GoldShield', 'White', '100-200-3000', 'Male', 555667777, 7);
 
 alter sequence patient_sequence restart with 8;
+
+SET REFERENTIAL_INTEGRITY TRUE;

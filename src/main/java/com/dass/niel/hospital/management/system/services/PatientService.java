@@ -13,8 +13,8 @@ public class PatientService {
     @Autowired
     PatientRepository patientRepository;
 
-    public void addNewPatient(Patient patient){
-        patientRepository.save(patient);
+    public Patient addNewPatient(Patient patient){
+        return patientRepository.save(patient);
     }
 
     public long getNumOfPatients(){
