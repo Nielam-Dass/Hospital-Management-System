@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Visit Details</title>
+</head>
+<body>
+<h1 th:text="'Visit from ' + ${visit.patient.firstName} + ' ' + ${visit.patient.lastName}"></h1>
+<p th:text="'Status: ' + (${visit.dischargedOn==null} ? 'Ongoing' : 'Completed')"></p>
+<p th:text="'Admitted on: ' + ${visit.admittedOn}"></p>
+<p th:text="'Discharged on: ' + (${visit.dischargedOn==null} ? 'N/A' : ${visit.dischargedOn})"></p>
+<p th:text="'Reason for visit: ' + ${visit.reason}"></p>
+
+<a th:href="@{/patient/profile/{id}/view(id=${visit.patient.patientId})}">View patient profile</a>
+
+<div th:if="${visit.dischargedOn==null}">
+    <h2>Discharge patient:</h2>
+    <form method="post">
+        <label for="dischargeDate">Discharge Date: </label>
+        <input type="date" id="dischargeDate" name="dischargeDate" th:value="${currentDate}">
+
+        <input type="submit" value="Discharge">
+    </form>
+</div>
+</body>
+</html>

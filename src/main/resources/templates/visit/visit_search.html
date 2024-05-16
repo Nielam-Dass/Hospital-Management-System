@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Visit Search</title>
+</head>
+<body>
+<h1>Search patient visits</h1>
+<form method="post">
+  <label for="ssn">SSN:</label>
+  <input type="text" id="ssn" name="ssn">
+
+  <label for="fname">First Name:</label>
+  <input type="text" id="fname" name="firstName">
+
+  <label for="lname">Last Name:</label>
+  <input type="text" id="lname" name="lastName">
+
+  <label for="fromDate">From: </label>
+  <input type="date" id="fromDate" name="fromDate">
+
+  <label for="toDate">To: </label>
+  <input type="date" id="toDate" name="toDate">
+
+  <input type="submit" value="Submit">
+</form>
+<div th:if="${visits!=null}">
+  <p th:text="${#lists.size(visits)} + ' result(s)'"></p>
+  <p th:each="visit: ${visits}" th:text="${visit}"></p>
+</div>
+
+</body>
+</html>

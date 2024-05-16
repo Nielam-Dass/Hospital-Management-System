@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Visit</title>
+</head>
+<body>
+<h1>Create new visit</h1>
+<form method="post">
+
+    <input type="checkbox" id="isNewPatient" name="isNewPatient" value="true">
+    <label for="isNewPatient">Is new Patient?</label><br>
+
+    <label for="ssn">SSN: </label>
+    <input type="text" id="ssn" name="ssn" required><br>
+
+    <label for="reason">Reason: </label>
+    <input type="text" id="reason" name="reason" required><br>
+
+    <label for="admittedOn">Admitted On: </label>
+    <input type="date" id="admittedOn" name="admittedOn" th:value="${currentDate}" required><br>
+
+    <label for="fname">First Name: </label>
+    <input type="text" id="fname" name="firstName"><br>
+
+    <label for="lname">Last Name: </label>
+    <input type="text" id="lname" name="lastName"><br>
+
+    <label for="dob">Date of Birth: </label>
+    <input type="date" id="dob" name="dob"><br>
+
+    <label for="sex">Sex: </label>
+    <input type="text" id="sex" name="sex"><br>
+
+    <label for="phone">Phone Number: </label>
+    <input type="text" id="phone" name="phoneNumber"><br>
+
+    <label for="insurance">Insurance: </label>
+    <input type="text" id="insurance" name="insurance"><br>
+
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>

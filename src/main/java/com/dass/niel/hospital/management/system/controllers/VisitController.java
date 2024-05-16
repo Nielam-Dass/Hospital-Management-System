@@ -58,7 +58,8 @@ public class VisitController {
     }
 
     @GetMapping("/new")
-    public String visitAdd(){
+    public String visitAdd(Model model){
+        model.addAttribute("currentDate", LocalDate.now());
         return "visit/visit_add";
     }
 
@@ -137,6 +138,7 @@ public class VisitController {
                 return "redirect:/visits";
             }
             model.addAttribute("visit", visit);
+            model.addAttribute("currentDate", LocalDate.now());
             return "visit/visit_view";
         }
         catch (NumberFormatException nfe){

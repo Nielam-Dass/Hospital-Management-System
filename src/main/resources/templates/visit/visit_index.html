@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Visit Home</title>
+</head>
+<body>
+<h1>Hospital Visit Records</h1>
+<p th:text="${numActiveVisits} + ' active visit(s)'"></p>
+<a th:href="@{/visits/new}">Add new visit</a><br>
+<a th:href="@{/visits/search}">Search visits</a><br>
+<a th:href="@{/visits/all}">View all visits</a><br>
+</body>
+</html>

@@ -11,7 +11,6 @@
 <p th:text="'SSN: ' + ${patient.ssn}"></p>
 <p th:text="'Phone number: ' + ${patient.phoneNumber}"></p>
 <p th:text="'Insurance: ' + ${patient.insurance}"></p>
-<p th:text="'ID: ' + ${patient.patientId}"></p>
 
 <a th:href="@{/patient/profile/{id}/edit(id=${patient.patientId})}">Update Information</a>
 </body>

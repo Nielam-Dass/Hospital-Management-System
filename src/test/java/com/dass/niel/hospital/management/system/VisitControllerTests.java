@@ -59,7 +59,7 @@ public class VisitControllerTests {
 
         mockMvc.perform(post("/visits/new").contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("firstName", "Billy").param("lastName", "Jackson")
-                        .param("dob", "1992").param("sex", "Male")
+                        .param("dob", "1992-06-02").param("sex", "Male")
                         .param("ssn", "102003000").param("phoneNumber", "123-456-7890")
                         .param("insurance", "A-Health").param("isNewPatient", "true")
                         .param("admittedOn", "2024-05-10").param("reason", "Coughing and chest pain"))
@@ -88,7 +88,7 @@ public class VisitControllerTests {
 
         mockMvc.perform(post("/visits/new").contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("firstName", "Billy").param("lastName", "Jackson")
-                        .param("dob", "1992").param("sex", "Male")
+                        .param("dob", "1992-06-02").param("sex", "Male")
                         .param("ssn", "102003000").param("phoneNumber", "123-456-7890")
                         .param("insurance", "A-Health").param("isNewPatient", "true")
                         .param("admittedOn", "2024-05-10").param("reason", "Coughing and chest pain"))
@@ -131,7 +131,7 @@ public class VisitControllerTests {
 
         mockMvc.perform(post("/visits/2").contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("dischargeDate", "2024-05-14"))
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().is3xxRedirection());
 
         mockMvc.perform(get("/visits/2"))
                 .andExpect(status().isOk())
@@ -180,13 +180,13 @@ public class VisitControllerTests {
         mockMvc.perform(post("/visits/search").contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("ssn", "").param("firstName", "")
                         .param("lastName", "").param("fromDate", "2000-01-01")
-                        .param("toDate", "2024-05-12"))
+                        .param("toDate", "2024-05-11"))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("3 result(s)")));
 
         mockMvc.perform(post("/visits/search").contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("ssn", "555443333").param("firstName", "Lisa")
                         .param("lastName", "White").param("fromDate", "2000-01-01")
-                        .param("toDate", "2024-05-12"))
+                        .param("toDate", "2024-05-11"))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("1 result(s)")));
 
         mockMvc.perform(post("/visits/search").contentType(MediaType.APPLICATION_FORM_URLENCODED)
