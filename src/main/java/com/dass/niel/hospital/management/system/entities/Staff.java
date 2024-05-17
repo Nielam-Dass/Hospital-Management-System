@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -42,4 +43,7 @@ public class Staff {
 
     @Column(name = "salary", nullable = false)
     private Integer salary;
+
+    @ManyToMany(mappedBy = "staffInvolved")
+    private List<Visit> assignedVisits;
 }

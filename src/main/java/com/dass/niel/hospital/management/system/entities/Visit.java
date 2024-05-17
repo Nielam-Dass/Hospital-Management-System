@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -39,5 +40,19 @@ public class Visit {
             referencedColumnName = "patientId"
     )
     private Patient patient;
+
+    @ManyToMany
+    @JoinTable(
+            name = "staff_visit",
+            joinColumns = @JoinColumn(
+                    name = "visit_id",
+                    referencedColumnName = "visitId"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "staff_id",
+                    referencedColumnName = "staffId"
+            )
+    )
+    private List<Staff> staffInvolved;
 
 }
