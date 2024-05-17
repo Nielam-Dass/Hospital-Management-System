@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Sql(scripts = {"/patient_schema_init.sql", "/visit_schema_init.sql"})
+@Sql(scripts = {"/patient_schema_init.sql", "/staff_schema_init.sql", "/visit_schema_init.sql"})
 public class VisitControllerTests {
     @Autowired
     MockMvc mockMvc;
@@ -213,5 +213,64 @@ public class VisitControllerTests {
                 .andExpect(content().string(containsString("visitId=2")))
                 .andExpect(content().string(containsString("visitId=3")))
                 .andExpect(content().string(containsString("visitId=4")));
+    }
+
+    @Test
+    @Sql(scripts = {"/patient_data_init.sql", "/staff_data_init.sql", "/visit_data_init.sql"})
+    void testAddingStaffToVisit() throws Exception {
+        mockMvc.perform(get("/visits/visit-details/2"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Visit from Lisa White")))
+                .andExpect(content().string(containsString("0 staff on case:")));
+
+        mockMvc.perform(get("/staff/profile/5/view"))
+                .andExpect(status().isOk()).andExpect(content().string(containsString("Ben Robinson Employee Profile")))
+                .andExpect(content().string(containsString("Department: Nursing")))
+                .andExpect(content().string(containsString("Role: Nurse")))
+                .andExpect(content().string(containsString("0 current patient(s):")));
+
+        mockMvc.perform(post("/visits/visit-details/2").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("addedStaff", "5"))
+                .andExpect(status().is3xxRedirection());
+
+        mockMvc.perform(get("/visits/visit-details/2"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Visit from Lisa White")))
+                .andExpect(content().string(containsString("1 staff on case:")))
+                .andExpect(content().string(containsString("Ben Robinson")));
+
+        mockMvc.perform(post("/visits/visit-details/2").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("addedStaff", "5"))
+                .andExpect(status().is3xxRedirection());
+
+        mockMvc.perform(get("/visits/visit-details/2"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Visit from Lisa White")))
+                .andExpect(content().string(containsString("1 staff on case:")))
+                .andExpect(content().string(containsString("Ben Robinson")));
+
+        mockMvc.perform(get("/staff/profile/5/view"))
+                .andExpect(status().isOk()).andExpect(content().string(containsString("Ben Robinson Employee Profile")))
+                .andExpect(content().string(containsString("Department: Nursing")))
+                .andExpect(content().string(containsString("Role: Nurse")))
+                .andExpect(content().string(containsString("1 current patient(s)")))
+                .andExpect(content().string(containsString("Lisa White")));
+
+        mockMvc.perform(post("/visits/visit-details/2").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("dischargeDate", "2024-05-14"))
+                .andExpect(status().is3xxRedirection());
+
+        mockMvc.perform(get("/visits/visit-details/2"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Visit from Lisa White")))
+                .andExpect(content().string(containsString("1 staff on case:")))
+                .andExpect(content().string(containsString("Ben Robinson")));
+
+        mockMvc.perform(get("/staff/profile/5/view"))
+                .andExpect(status().isOk()).andExpect(content().string(containsString("Ben Robinson Employee Profile")))
+                .andExpect(content().string(containsString("Department: Nursing")))
+                .andExpect(content().string(containsString("Role: Nurse")))
+                .andExpect(content().string(containsString("0 current patient(s)")));
+
     }
 }
