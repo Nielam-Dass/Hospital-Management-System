@@ -129,7 +129,7 @@ public class VisitController {
         }
     }
 
-    @GetMapping("/{visitIdStr}")
+    @GetMapping("/visit-details/{visitIdStr}")
     public String visitView(@PathVariable String visitIdStr, Model model){
         try{
             Long visitId = Long.valueOf(visitIdStr);
@@ -146,7 +146,7 @@ public class VisitController {
         }
     }
 
-    @PostMapping(value="/{visitIdStr}", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    @PostMapping(value="/visit-details/{visitIdStr}", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     public String visitEnd(@PathVariable String visitIdStr, @RequestBody MultiValueMap<String, String> paramMap){
         String dischargeDateStr = (paramMap.containsKey("dischargeDate") && paramMap.getFirst("dischargeDate").length()>0) ? paramMap.getFirst("dischargeDate") : null;
 

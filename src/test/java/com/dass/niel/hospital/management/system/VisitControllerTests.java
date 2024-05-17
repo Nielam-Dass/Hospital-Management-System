@@ -122,18 +122,18 @@ public class VisitControllerTests {
         mockMvc.perform(get("/visits"))
                 .andExpect(content().string(containsString("3 active visit(s)")));
 
-        mockMvc.perform(get("/visits/2"))
+        mockMvc.perform(get("/visits/visit-details/2"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Visit from Lisa White")))
                 .andExpect(content().string(containsString("Status: Ongoing")))
                 .andExpect(content().string(containsString("Admitted on: 2024-05-12")))
                 .andExpect(content().string(containsString("Discharged on: N/A")));
 
-        mockMvc.perform(post("/visits/2").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        mockMvc.perform(post("/visits/visit-details/2").contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("dischargeDate", "2024-05-14"))
                 .andExpect(status().is3xxRedirection());
 
-        mockMvc.perform(get("/visits/2"))
+        mockMvc.perform(get("/visits/visit-details/2"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Visit from Lisa White")))
                 .andExpect(content().string(containsString("Status: Completed")))
