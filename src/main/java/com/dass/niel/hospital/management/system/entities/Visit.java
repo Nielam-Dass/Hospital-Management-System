@@ -41,7 +41,9 @@ public class Visit {
     )
     private Patient patient;
 
-    @ManyToMany
+    @ManyToMany(
+            fetch = FetchType.EAGER
+    )
     @JoinTable(
             name = "staff_visit",
             joinColumns = @JoinColumn(
