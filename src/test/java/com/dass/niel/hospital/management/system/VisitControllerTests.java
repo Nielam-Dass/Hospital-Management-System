@@ -272,5 +272,21 @@ public class VisitControllerTests {
                 .andExpect(content().string(containsString("Role: Nurse")))
                 .andExpect(content().string(containsString("0 current patient(s)")));
 
+        mockMvc.perform(post("/visits/visit-details/2").contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("addedStaff", "3"))
+                .andExpect(status().is3xxRedirection());
+
+        mockMvc.perform(get("/visits/visit-details/2"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Visit from Lisa White")))
+                .andExpect(content().string(containsString("1 staff on case:")))
+                .andExpect(content().string(containsString("Ben Robinson")));
+
+        mockMvc.perform(get("/staff/profile/3/view"))
+                .andExpect(status().isOk()).andExpect(content().string(containsString("Larry Davis Employee Profile")))
+                .andExpect(content().string(containsString("Department: Cardiology")))
+                .andExpect(content().string(containsString("Role: ECG Technician")))
+                .andExpect(content().string(containsString("0 current patient(s)")));
+
     }
 }

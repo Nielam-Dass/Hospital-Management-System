@@ -164,7 +164,7 @@ public class VisitController {
                     LocalDate dischargeDate = LocalDate.parse(dischargeDateStr);
                     visitService.endVisit(visit, dischargeDate);
                 }
-                else if(addedStaffIdStr!=null){
+                else if(addedStaffIdStr!=null && visit.getDischargedOn()==null){
                     Long staffId = Long.valueOf(addedStaffIdStr);
                     Staff addedStaff = staffService.getStaffById(staffId);
                     if(addedStaff!=null){
