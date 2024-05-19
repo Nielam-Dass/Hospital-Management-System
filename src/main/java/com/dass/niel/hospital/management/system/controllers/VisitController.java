@@ -173,7 +173,7 @@ public class VisitController {
                 }
 
             }
-            return "redirect:/visits";
+            return "redirect:/visits/visit-details/"+visitIdStr;
         }
         catch (NumberFormatException | DateTimeParseException e){
             return "redirect:/visits";

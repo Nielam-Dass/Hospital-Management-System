@@ -23,9 +23,9 @@
 
             <input type="submit" value="Add staff">
         </form>
+        <br>
     </div>
 
-    <br>
     <p th:text="${#lists.size(visit.staffInvolved)} + ' staff on case:'"></p>
     <ul>
         <li th:each="s: ${visit.staffInvolved}" th:text="${s.firstName} + ' ' + ${s.lastName}"></li>
