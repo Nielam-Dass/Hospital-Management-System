@@ -13,6 +13,22 @@
 
 <a th:href="@{/patient/profile/{id}/view(id=${visit.patient.patientId})}">View patient profile</a>
 
+<div>
+    <h2>Add staff to case:</h2>
+    <form method="post">
+        <label for="addedStaff">Staff ID: </label>
+        <input type="text" id="addedStaff" name="addedStaff">
+
+        <input type="submit" value="Add staff">
+    </form>
+    <br>
+    <p th:text="${#lists.size(visit.staffInvolved)} + ' staff on case:'"></p>
+    <ul>
+        <li th:each="s: ${visit.staffInvolved}" th:text="${s.firstName} + ' ' + ${s.lastName}"></li>
+    </ul>
+</div>
+
+
 <div th:if="${visit.dischargedOn==null}">
     <h2>Discharge patient:</h2>
     <form method="post">

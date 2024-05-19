@@ -1,8 +1,10 @@
 package com.dass.niel.hospital.management.system.controllers;
 
 import com.dass.niel.hospital.management.system.entities.Patient;
+import com.dass.niel.hospital.management.system.entities.Staff;
 import com.dass.niel.hospital.management.system.entities.Visit;
 import com.dass.niel.hospital.management.system.services.PatientService;
+import com.dass.niel.hospital.management.system.services.StaffService;
 import com.dass.niel.hospital.management.system.services.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,6 +25,9 @@ public class VisitController {
 
     @Autowired
     PatientService patientService;
+
+    @Autowired
+    StaffService staffService;
 
     @GetMapping(value = {"", "/"})
     public String visitIndex(Model model){
@@ -147,15 +152,26 @@ public class VisitController {
     }
 
     @PostMapping(value="/visit-details/{visitIdStr}", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public String visitEnd(@PathVariable String visitIdStr, @RequestBody MultiValueMap<String, String> paramMap){
+    public String visitUpdate(@PathVariable String visitIdStr, @RequestBody MultiValueMap<String, String> paramMap){
         String dischargeDateStr = (paramMap.containsKey("dischargeDate") && paramMap.getFirst("dischargeDate").length()>0) ? paramMap.getFirst("dischargeDate") : null;
+        String addedStaffIdStr = (paramMap.containsKey("addedStaff") && paramMap.getFirst("addedStaff").length()>0) ? paramMap.getFirst("addedStaff") : null;
 
         try{
             Long visitId = Long.valueOf(visitIdStr);
             Visit visit = visitService.getVisitById(visitId);
             if(visit!=null){
-                LocalDate dischargeDate = LocalDate.parse(dischargeDateStr);
-                visitService.endVisit(visit, dischargeDate);
+                if(dischargeDateStr!=null){
+                    LocalDate dischargeDate = LocalDate.parse(dischargeDateStr);
+                    visitService.endVisit(visit, dischargeDate);
+                }
+                else if(addedStaffIdStr!=null){
+                    Long staffId = Long.valueOf(addedStaffIdStr);
+                    Staff addedStaff = staffService.getStaffById(staffId);
+                    if(addedStaff!=null){
+                        visitService.assignVisitToStaff(visit, addedStaff);
+                    }
+                }
+
             }
             return "redirect:/visits";
         }

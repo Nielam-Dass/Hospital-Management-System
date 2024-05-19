@@ -1,3 +1,5 @@
+SET REFERENTIAL_INTEGRITY FALSE;
+
 truncate table staff;
 
 insert into staff (department, dob, first_name, hired_on, last_name, role, salary, staff_id) values
@@ -8,3 +10,5 @@ insert into staff (department, dob, first_name, hired_on, last_name, role, salar
 ('Nursing', '1988-08-16', 'Ben', '2016-10-02', 'Robinson', 'Nurse', 85000, 5);
 
 alter sequence staff_sequence restart with 6;
+
+SET REFERENTIAL_INTEGRITY TRUE;

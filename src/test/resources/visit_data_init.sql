@@ -1,3 +1,5 @@
+SET REFERENTIAL_INTEGRITY FALSE;
+
 truncate table visit;
 
 insert into visit (visit_id, patient_id, admitted_on, discharged_on, reason) values
@@ -7,3 +9,5 @@ insert into visit (visit_id, patient_id, admitted_on, discharged_on, reason) val
 (4, 5, '2012-06-07', '2012-06-09', 'Going into labor');
 
 alter sequence visit_sequence restart with 5;
+
+SET REFERENTIAL_INTEGRITY TRUE;

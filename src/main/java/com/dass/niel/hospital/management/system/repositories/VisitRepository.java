@@ -16,6 +16,12 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
             "(v.admittedOn >= :fromDate or :fromDate is null) and (v.admittedOn <= :toDate or :toDate is null)")
     List<Visit> findBySsnNameAndAdmissionDateRange(Integer ssn, String firstName, String lastName, LocalDate fromDate, LocalDate toDate);
 
+    @Query("select v from Visit v inner join v.staffInvolved s where s.staffId = :staffId")
+    List<Visit> findByStaffInvolved(Long staffId);
+
+    @Query("select v from Visit v inner join v.staffInvolved s where s.staffId = :staffId and v.dischargedOn is null")
+    List<Visit> findActiveByStaffInvolved(Long staffId);
+
     List<Visit> findByDischargedOnNull();
 
     Long countByDischargedOnNull();

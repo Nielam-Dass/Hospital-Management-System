@@ -13,5 +13,12 @@
 <p th:text="'Salary: ' + ${staff.salary}"></p>
 
 <a th:href="@{/staff/profile/{id}/edit(id=${staff.staffId})}">Update Information</a>
+
+<br>
+<p th:text="${#lists.size(assignedVisits)} + ' current patient(s):'"></p>
+<ul>
+    <li th:each="v: ${assignedVisits}" th:text="${v.patient.firstName} + ' ' + ${v.patient.lastName}"></li>
+</ul>
+
 </body>
 </html>

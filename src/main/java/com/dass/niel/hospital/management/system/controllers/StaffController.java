@@ -1,7 +1,9 @@
 package com.dass.niel.hospital.management.system.controllers;
 
+import com.dass.niel.hospital.management.system.entities.Visit;
 import com.dass.niel.hospital.management.system.services.StaffService;
 import com.dass.niel.hospital.management.system.entities.Staff;
+import com.dass.niel.hospital.management.system.services.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,9 @@ public class StaffController {
 
     @Autowired
     StaffService staffService;
+
+    @Autowired
+    VisitService visitService;
 
     @GetMapping(value = {"", "/"})
     public String staffIndex(Model model){
@@ -102,7 +107,9 @@ public class StaffController {
             if(staff==null){
                 return "redirect:/staff";
             }
+            List<Visit> assignedVisits = visitService.getActiveVisitsByStaffInvolved(staffId);
             model.addAttribute("staff", staff);
+            model.addAttribute("assignedVisits", assignedVisits);
             return "staff/staff_view";
         }
         catch (NumberFormatException nfe) {

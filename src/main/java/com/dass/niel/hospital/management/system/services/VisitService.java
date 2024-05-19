@@ -1,5 +1,6 @@
 package com.dass.niel.hospital.management.system.services;
 
+import com.dass.niel.hospital.management.system.entities.Staff;
 import com.dass.niel.hospital.management.system.entities.Visit;
 import com.dass.niel.hospital.management.system.repositories.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,18 @@ public class VisitService {
         visitRepository.save(visit);
     }
 
+    public void assignVisitToStaff(Visit visit, Staff staff){
+        List<Staff> staffInvolved = visit.getStaffInvolved();
+        for(Staff s : staffInvolved){
+            if(s.getStaffId().equals(staff.getStaffId())){
+                return;
+            }
+        }
+        staffInvolved.add(staff);
+        visit.setStaffInvolved(staffInvolved);
+        visitRepository.save(visit);
+    }
+
     public long getNumOfActiveVisits(){
         return visitRepository.countByDischargedOnNull();
     }
@@ -34,6 +47,14 @@ public class VisitService {
 
     public List<Visit> getActiveVisits(){
         return visitRepository.findByDischargedOnNull();
+    }
+
+    public List<Visit> getVisitsByStaffInvolved(Long staffId){
+        return visitRepository.findByStaffInvolved(staffId);
+    }
+
+    public List<Visit> getActiveVisitsByStaffInvolved(Long staffId){
+        return visitRepository.findActiveByStaffInvolved(staffId);
     }
 
     public List<Visit> getAllVisits(){
