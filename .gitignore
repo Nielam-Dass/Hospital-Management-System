@@ -53,3 +53,8 @@ buildNumber.properties
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 /.mvn/wrapper/maven-wrapper.jar
+
+
+# File storage
+/file-store-testing/
+/file-store/
