@@ -71,6 +71,7 @@ public class MedicalRecordControllerTests {
     }
 
     @Test
+    @Sql(scripts = {"/patient_data_init.sql", "/staff_data_init.sql"})
     void testMedRecordAddWithoutDbInit() throws Exception {
         mockMvc.perform(get("/medical-records"))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("0 medical record(s)")));
@@ -165,9 +166,9 @@ public class MedicalRecordControllerTests {
     void testViewAllMedRecordNonempty() throws Exception {
         mockMvc.perform(get("/medical-records/all"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("recordIdd=1")))
-                .andExpect(content().string(containsString("recordIdd=2")))
-                .andExpect(content().string(containsString("recordIdd=3")));
+                .andExpect(content().string(containsString("recordId=1")))
+                .andExpect(content().string(containsString("recordId=2")))
+                .andExpect(content().string(containsString("recordId=3")));
     }
 
     @Test

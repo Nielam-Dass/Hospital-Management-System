@@ -1,6 +1,8 @@
 SET REFERENTIAL_INTEGRITY FALSE;
 
 truncate table staff;
+truncate table visit;
+truncate table medical_record;
 
 insert into staff (department, dob, first_name, hired_on, last_name, role, salary, staff_id) values
 ('Cardiology', '1979-01-09', 'Max', '2015-03-05', 'Anderson', 'Heart Surgeon', 195000, 1),

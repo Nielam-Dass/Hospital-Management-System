@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Record Details</title>
+</head>
+<body>
+<h1 th:text="${medicalRecord.name}"></h1>
+<p th:text="${medicalRecord.description}"></p>
+<p th:text="'Created on: ' + ${medicalRecord.createdOn}"></p>
+<p th:text="'Added By: ' + ${medicalRecord.addedBy.firstName} + ' ' + ${medicalRecord.addedBy.lastName}"></p>
+<p th:text="'Patient: ' + ${medicalRecord.patient.firstName} + ' ' + ${medicalRecord.patient.lastName}"></p>
+
+<a th:if="${medicalRecord.recordFile!=null}" th:href="@{/medical-records/record/{id}/download(id=${medicalRecord.recordId})}" download>Download record file</a>
+
+</body>
+</html>

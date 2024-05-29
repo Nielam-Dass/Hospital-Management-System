@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Record</title>
+</head>
+<body>
+<h1>Add Medical Record</h1>
+<form method="post" enctype="multipart/form-data">
+
+    <label for="name">Record Name: </label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="description">Record Description: </label>
+    <input type="text" id="description" name="description" required><br>
+
+    <label for="createdOn">Created on: </label>
+    <input type="date" id="createdOn" name="createdOn" th:value="${currentDate}" required><br>
+
+    <label for="patientSsn">Patient SSN: </label>
+    <input type="text" id="patientSsn" name="patientSsn" required><br>
+
+    <label for="staffId">Added by: </label>
+    <input type="text" id="staffId" name="staffId" required><br>
+
+    <label for="file">Record file: </label>
+    <input type="file" id="file" name="file"><br>
+
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>

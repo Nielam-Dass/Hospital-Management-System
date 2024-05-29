@@ -41,7 +41,7 @@ public class MedicalRecordService {
     }
 
     public MedicalRecord addNewMedRecord(MedicalRecord medicalRecord, MultipartFile file){
-        if(file!=null){
+        if(!file.isEmpty()){
             Path recordFilePath = storeMedRecordFile(file);
             medicalRecord.setRecordFile(recordFilePath.toString());
         }

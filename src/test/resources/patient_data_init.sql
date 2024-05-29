@@ -1,6 +1,8 @@
 SET REFERENTIAL_INTEGRITY FALSE;
 
 truncate table patient;
+truncate table visit;
+truncate table medical_record;
 
 insert into patient (dob, first_name, insurance, last_name, phone_number, sex, ssn, patient_id) values
 ('1998-08-04', 'Adam', 'XHealth', 'Smith', '555-555-5555', 'Male', 111223333, 1),

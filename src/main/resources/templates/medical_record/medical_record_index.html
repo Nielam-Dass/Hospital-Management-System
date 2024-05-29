@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Records </title>
+</head>
+<body>
+<h1>Hospital Medical Records</h1>
+<p th:text="${numRecords} + ' medical record(s)'"></p>
+<a th:href="@{/medical-records/new}">Add new record</a><br>
+<a th:href="@{/medical-records/search}">Search records</a><br>
+<a th:href="@{/medical-records/all}">View all records</a><br>
+</body>
+</html>
