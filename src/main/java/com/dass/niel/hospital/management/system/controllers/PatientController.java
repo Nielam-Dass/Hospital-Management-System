@@ -68,7 +68,7 @@ public class PatientController {
         return "patient/patient_search";
     }
 
-    @GetMapping("new")  // Will be removed later (should only add patient upon first visit)
+    @GetMapping("new")
     public String patientAdd(){
         return "patient/patient_add";
     }
