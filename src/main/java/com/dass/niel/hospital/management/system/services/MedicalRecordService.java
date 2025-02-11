@@ -7,17 +7,17 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface MedicalRecordService {
-    public void init();
+    void init();
 
-    public MedicalRecord addNewMedRecord(MedicalRecord medicalRecord, MultipartFile file);
+    MedicalRecord addNewMedRecord(MedicalRecord medicalRecord, MultipartFile file);
 
-    public List<MedicalRecord> getMedRecordsBySsnNameAndKeyword(Integer ssn, String firstName, String lastName, String keyword);
+    List<MedicalRecord> getMedRecordsBySsnNameAndKeyword(Integer ssn, String firstName, String lastName, String keyword);
 
-    public Long getNumOfMedRecords();
+    Long getNumOfMedRecords();
 
-    public List<MedicalRecord> getAllMedRecords();
+    List<MedicalRecord> getAllMedRecords();
 
-    public MedicalRecord getMedRecordById(Long recordId);
+    MedicalRecord getMedRecordById(Long recordId);
 
-    public Resource loadMedRecordFile(Long recordId);
+    Resource loadMedRecordFile(Long recordId);
 }

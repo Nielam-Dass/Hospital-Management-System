@@ -5,18 +5,17 @@ import com.dass.niel.hospital.management.system.entities.Patient;
 import java.util.List;
 
 public interface PatientService {
+    Patient addNewPatient(Patient patient);
 
-    public Patient addNewPatient(Patient patient);
+    long getNumOfPatients();
 
-    public long getNumOfPatients();
+    List<Patient> getAllPatients();
 
-    public List<Patient> getAllPatients();
+    Patient getPatientBySsn(Integer ssn);
 
-    public Patient getPatientBySsn(Integer ssn);
+    List<Patient> getPatientsByFullName(String firstName, String lastName);
 
-    public List<Patient> getPatientsByFullName(String firstName, String lastName);
+    Patient getPatientById(Long patientId);
 
-    public Patient getPatientById(Long patientId);
-
-    public void updatePatient(Patient patient);
+    void updatePatient(Patient patient);
 }

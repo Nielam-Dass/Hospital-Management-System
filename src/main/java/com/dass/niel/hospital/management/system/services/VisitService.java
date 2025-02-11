@@ -7,23 +7,23 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface VisitService {
-    public void addNewVisit(Visit visit);
+    void addNewVisit(Visit visit);
 
-    public void endVisit(Visit visit, LocalDate endDate);
+    void endVisit(Visit visit, LocalDate endDate);
 
-    public void assignVisitToStaff(Visit visit, Staff staff);
+    void assignVisitToStaff(Visit visit, Staff staff);
 
-    public long getNumOfActiveVisits();
+    long getNumOfActiveVisits();
 
-    public List<Visit> getVisitsBySsnNameAndDateRange(Integer ssn, String firstName, String lastName, LocalDate fromDate, LocalDate toDate);
+    List<Visit> getVisitsBySsnNameAndDateRange(Integer ssn, String firstName, String lastName, LocalDate fromDate, LocalDate toDate);
 
-    public List<Visit> getActiveVisits();
+    List<Visit> getActiveVisits();
 
-    public List<Visit> getVisitsByStaffInvolved(Long staffId);
+    List<Visit> getVisitsByStaffInvolved(Long staffId);
 
-    public List<Visit> getActiveVisitsByStaffInvolved(Long staffId);
+    List<Visit> getActiveVisitsByStaffInvolved(Long staffId);
 
-    public List<Visit> getAllVisits();
+    List<Visit> getAllVisits();
 
-    public Visit getVisitById(Long visitId);
+    Visit getVisitById(Long visitId);
 }
