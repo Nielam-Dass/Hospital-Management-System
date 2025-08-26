@@ -3,12 +3,11 @@ package com.dass.niel.hospital.management.system.repositories;
 import com.dass.niel.hospital.management.system.entities.Visit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Repository
+
 public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     @Query("select v from Visit v inner join v.patient p where (p.ssn = :ssn or :ssn is null) and " +
