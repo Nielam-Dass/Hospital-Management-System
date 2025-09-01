@@ -2,7 +2,6 @@ package com.dass.niel.hospital.management.system.services;
 
 import com.dass.niel.hospital.management.system.entities.Patient;
 import com.dass.niel.hospital.management.system.repositories.PatientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,8 +9,11 @@ import java.util.Optional;
 
 @Service
 public class PatientServiceImpl implements PatientService{
-    @Autowired
-    PatientRepository patientRepository;
+    private final PatientRepository patientRepository;
+
+    public PatientServiceImpl(PatientRepository patientRepository) {
+        this.patientRepository = patientRepository;
+    }
 
     public Patient addNewPatient(Patient patient){
         return patientRepository.save(patient);

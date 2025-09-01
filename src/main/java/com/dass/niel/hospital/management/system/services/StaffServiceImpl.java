@@ -2,7 +2,6 @@ package com.dass.niel.hospital.management.system.services;
 
 import com.dass.niel.hospital.management.system.entities.Staff;
 import com.dass.niel.hospital.management.system.repositories.StaffRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,8 +9,11 @@ import java.util.Optional;
 
 @Service
 public class StaffServiceImpl implements StaffService {
-    @Autowired
-    StaffRepository staffRepository;
+    private final StaffRepository staffRepository;
+
+    public StaffServiceImpl(StaffRepository staffRepository) {
+        this.staffRepository = staffRepository;
+    }
 
     public void addNewStaff(Staff staff){
         staffRepository.save(staff);

@@ -2,7 +2,6 @@ package com.dass.niel.hospital.management.system.services;
 
 import com.dass.niel.hospital.management.system.entities.MedicalRecord;
 import com.dass.niel.hospital.management.system.repositories.MedicalRecordRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -19,19 +18,22 @@ import java.util.Optional;
 
 @Service
 public class MedicalRecordServiceImpl implements MedicalRecordService{
-    @Autowired
-    MedicalRecordRepository medicalRecordRepository;
+    private final MedicalRecordRepository medicalRecordRepository;
 
-    @Value("${file_store_folder}") String folderName;
+    @Value("${file_store_folder}") private String folderName;
 
-    Path fileStore;
+    private Path fileStore;
+
+    public MedicalRecordServiceImpl(MedicalRecordRepository medicalRecordRepository) {
+        this.medicalRecordRepository = medicalRecordRepository;
+    }
 
     public void init(){
-        fileStore = Paths.get(folderName);
+        this.fileStore = Paths.get(folderName);
 
         try{
-            if(!Files.exists(fileStore)){
-                Files.createDirectories(fileStore);
+            if(!Files.exists(this.fileStore)){
+                Files.createDirectories(this.fileStore);
             }
         } catch (IOException e) {
             System.out.println("Could not create " + folderName + " folder");
@@ -74,7 +76,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService{
 
     private Path storeMedRecordFile(MultipartFile file){
         try{
-            Path dest = fileStore.resolve(file.getOriginalFilename());
+            Path dest = this.fileStore.resolve(file.getOriginalFilename());
             Files.copy(file.getInputStream(), dest);
             return dest;
         } catch (IOException e) {

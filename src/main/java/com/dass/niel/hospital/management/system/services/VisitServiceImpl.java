@@ -3,7 +3,6 @@ package com.dass.niel.hospital.management.system.services;
 import com.dass.niel.hospital.management.system.entities.Staff;
 import com.dass.niel.hospital.management.system.entities.Visit;
 import com.dass.niel.hospital.management.system.repositories.VisitRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,8 +11,11 @@ import java.util.Optional;
 
 @Service
 public class VisitServiceImpl implements VisitService {
-    @Autowired
-    VisitRepository visitRepository;
+    private final VisitRepository visitRepository;
+
+    public VisitServiceImpl(VisitRepository visitRepository) {
+        this.visitRepository = visitRepository;
+    }
 
     public void addNewVisit(Visit visit){
         visitRepository.save(visit);
