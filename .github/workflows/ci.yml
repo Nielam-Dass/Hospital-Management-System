@@ -20,6 +20,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -29,7 +30,7 @@ jobs:
           java-version: "22"
           distribution: "temurin"
       - name: Build JAR file
-        run: mvn clean package
+        run: mvn -Dmaven.test.skip=true clean package
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
