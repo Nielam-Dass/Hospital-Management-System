@@ -105,7 +105,8 @@ public class PatientControllerTests {
                 .andExpect(content().string(containsString("7 patient(s) in database")));
 
         mockMvc.perform(get("/patient/search"))
-                .andExpect(status().isOk()).andExpect(content().string(containsString("Patient Search")));
+                .andExpect(status().isOk()).andExpect(content().string(containsString("Patient Search")))
+                .andExpect(content().string(containsString("href=\"/patient\"")));
 
         mockMvc.perform(post("/patient/search").contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("ssn", "333221111")
