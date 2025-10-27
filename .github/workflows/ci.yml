@@ -15,6 +15,7 @@ jobs:
         with:
           java-version: "22"
           distribution: "temurin"
+          cache: "maven"
       - name: Run tests
         run: mvn test
 
@@ -29,6 +30,7 @@ jobs:
         with:
           java-version: "22"
           distribution: "temurin"
+          cache: "maven"
       - name: Build JAR file
         run: mvn -Dmaven.test.skip=true clean package
       - name: Login to Docker Hub
