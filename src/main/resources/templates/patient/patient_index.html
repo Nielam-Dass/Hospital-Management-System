@@ -5,6 +5,7 @@
     <title>Patient Dashboard</title>
 </head>
 <body>
+    <a th:href="@{/}">&lt&lt Back to main page</a>
     <h1>Patient Dashboard</h1>
     <p th:text="${numPatients} + ' patient(s) in database'"></p>
     <a th:href="@{/patient/new}">Add new patient</a><br>

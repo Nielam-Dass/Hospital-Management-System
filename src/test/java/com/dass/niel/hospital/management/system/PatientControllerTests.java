@@ -28,10 +28,12 @@ public class PatientControllerTests {
     void testPatientIndexWithoutDbInit() throws Exception {
         mockMvc.perform(get("/patient/"))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("Patient Dashboard")))
+                .andExpect(content().string(containsString("href=\"/\"")))
                 .andExpect(content().string(containsString("0 patient(s) in database")));
 
         mockMvc.perform(get("/patient"))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("Patient Dashboard")))
+                .andExpect(content().string(containsString("href=\"/\"")))
                 .andExpect(content().string(containsString("0 patient(s) in database")));
     }
 
